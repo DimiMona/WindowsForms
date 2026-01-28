@@ -33,6 +33,7 @@
 			this.labelTime = new System.Windows.Forms.Label();
 			this.timer = new System.Windows.Forms.Timer(this.components);
 			this.checkBoxShowDate = new System.Windows.Forms.CheckBox();
+			this.checkBoxShowWeek = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// labelTime
@@ -60,17 +61,31 @@
 			this.checkBoxShowDate.TabIndex = 1;
 			this.checkBoxShowDate.Text = "Show date";
 			this.checkBoxShowDate.UseVisualStyleBackColor = true;
+			this.checkBoxShowDate.CheckedChanged += new System.EventHandler(this.checkBoxShowDate_CheckedChanged);
+			// 
+			// checkBoxShowWeek
+			// 
+			this.checkBoxShowWeek.AutoSize = true;
+			this.checkBoxShowWeek.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.checkBoxShowWeek.Location = new System.Drawing.Point(63, 299);
+			this.checkBoxShowWeek.Name = "checkBoxShowWeek";
+			this.checkBoxShowWeek.Size = new System.Drawing.Size(189, 29);
+			this.checkBoxShowWeek.TabIndex = 2;
+			this.checkBoxShowWeek.Text = "Show Week Day";
+			this.checkBoxShowWeek.UseVisualStyleBackColor = true;
+			this.checkBoxShowWeek.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(25F, 51F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(806, 461);
+			this.Controls.Add(this.checkBoxShowWeek);
 			this.Controls.Add(this.checkBoxShowDate);
 			this.Controls.Add(this.labelTime);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 32.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.Margin = new System.Windows.Forms.Padding(12, 12, 12, 12);
+			this.Margin = new System.Windows.Forms.Padding(12);
 			this.Name = "MainForm";
 			this.Text = "ClockPV_522";
 			this.Load += new System.EventHandler(this.MainForm_Load);
@@ -84,6 +99,7 @@
 		private System.Windows.Forms.Label labelTime;
 		private System.Windows.Forms.Timer timer;
 		private System.Windows.Forms.CheckBox checkBoxShowDate;
+		private System.Windows.Forms.CheckBox checkBoxShowWeek;
 	}
 }
 
