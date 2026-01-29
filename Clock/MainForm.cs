@@ -23,7 +23,7 @@ namespace Clock
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
-			
+
 		}
 
 		private void timer_Tick(object sender, EventArgs e)
@@ -33,7 +33,7 @@ namespace Clock
 				"hh:mm:ss tt",
 				System.Globalization.CultureInfo.InvariantCulture
 				);
-			if(checkBoxShowDate.Checked)
+			if (checkBoxShowDate.Checked)
 			{
 				labelTime.Text += $"\n{DateTime.Now.ToString("yyyy.MM.dd")}";
 			}
@@ -43,28 +43,25 @@ namespace Clock
 			}
 		}
 
-		private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+		void SetVisibility(bool visible)
 		{
-
-		}
-
-		private void checkBoxShowDate_CheckedChanged(object sender, EventArgs e)
-		{
-
-		}
-
-		private void checkBox1_CheckedChanged(object sender, EventArgs e)
-		{
-
+			checkBoxShowDate.Visible = visible; //Делает невидимым
+			checkBoxShowWeek.Visible = visible; //Делает невидимым
+			buttonHideControls.Visible = visible; //Делает кнопку невидимым
+			this.FormBorderStyle = visible ? FormBorderStyle.FixedToolWindow : FormBorderStyle.None; //убираем границу окна
+			this.ShowInTaskbar = visible;// скрываем кнопку приложения в панели задач
+			this.TransparencyKey = visible ? Color.Empty : this.BackColor; //Делаем окно прозрачным
+																		   //для того чтобы сделать окно 
 		}
 
 		private void buttonHideControls_Click(object sender, EventArgs e)
 		{
-			this.FormBorderStyle = FormBorderStyle.None;
-			checkBoxShowDate.Visible = false;
-			checkBoxShowWeek.Visible = false;
-			buttonHideControls.Visible = false;
-			this.ShowInTaskbar = false;
+			SetVisibility(false);
+		}
+
+		private void labelTime_DoubleClick(object sender, EventArgs e)
+		{
+			SetVisibility(true);
 		}
 	}
 }
