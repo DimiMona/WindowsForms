@@ -34,6 +34,7 @@
 			this.timer = new System.Windows.Forms.Timer(this.components);
 			this.checkBoxShowDate = new System.Windows.Forms.CheckBox();
 			this.checkBoxShowWeek = new System.Windows.Forms.CheckBox();
+			this.buttonHideControls = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// labelTime
@@ -75,11 +76,23 @@
 			this.checkBoxShowWeek.UseVisualStyleBackColor = true;
 			this.checkBoxShowWeek.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
 			// 
+			// buttonHideControls
+			// 
+			this.buttonHideControls.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.buttonHideControls.Location = new System.Drawing.Point(63, 352);
+			this.buttonHideControls.Name = "buttonHideControls";
+			this.buttonHideControls.Size = new System.Drawing.Size(264, 77);
+			this.buttonHideControls.TabIndex = 3;
+			this.buttonHideControls.Text = "Hide Controls";
+			this.buttonHideControls.UseVisualStyleBackColor = true;
+			this.buttonHideControls.Click += new System.EventHandler(this.buttonHideControls_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(25F, 51F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(806, 461);
+			this.Controls.Add(this.buttonHideControls);
 			this.Controls.Add(this.checkBoxShowWeek);
 			this.Controls.Add(this.checkBoxShowDate);
 			this.Controls.Add(this.labelTime);
@@ -102,6 +115,7 @@
 		private System.Windows.Forms.Timer timer;
 		private System.Windows.Forms.CheckBox checkBoxShowDate;
 		private System.Windows.Forms.CheckBox checkBoxShowWeek;
+		private System.Windows.Forms.Button buttonHideControls;
 	}
 }
 
