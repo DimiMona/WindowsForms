@@ -41,6 +41,7 @@ namespace Clock
 			{
 				labelTime.Text += $"\n{DateTime.Now.ToString("dddd")}";
 			}
+			notifyIcon.Text = labelTime.Text;
 		}
 
 		void SetVisibility(bool visible)
