@@ -15,16 +15,15 @@ namespace Clock
 		public MainForm()
 		{
 			InitializeComponent();
+			// Получаем размеры рабочей области (без учета панели задач)
+			Rectangle screen = Screen.PrimaryScreen.WorkingArea;
+
+			this.Location = new Point(screen.Width - this.Width, 0);
 		}
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
-			// Получаем размеры рабочей области (без учета панели задач)
-			Rectangle screen = Screen.PrimaryScreen.WorkingArea;
-			// Устанавливаем координаты:
-			// X = Ширина экрана - Ширина формы
-			// Y = 0 (верх)
-			this.Location = new Point(screen.Width - this.Width, 0);
+			
 		}
 
 		private void timer_Tick(object sender, EventArgs e)
