@@ -64,5 +64,10 @@ namespace Clock
 		{
 			SetVisibility(true);
 		}
+
+		private void tsmiTopmost_Click(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

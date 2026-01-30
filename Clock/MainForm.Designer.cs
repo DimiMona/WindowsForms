@@ -138,6 +138,7 @@
 			this.tsmiTopmost.Name = "tsmiTopmost";
 			this.tsmiTopmost.Size = new System.Drawing.Size(180, 22);
 			this.tsmiTopmost.Text = "Topmost";
+			this.tsmiTopmost.Click += new System.EventHandler(this.tsmiTopmost_Click);
 			// 
 			// tsmiShowControls
 			// 
