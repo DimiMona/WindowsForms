@@ -31,11 +31,6 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.labelTime = new System.Windows.Forms.Label();
-			this.timer = new System.Windows.Forms.Timer(this.components);
-			this.checkBoxShowDate = new System.Windows.Forms.CheckBox();
-			this.checkBoxShowWeek = new System.Windows.Forms.CheckBox();
-			this.buttonHideControls = new System.Windows.Forms.Button();
-			this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.tsmiTopmost = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmiShowControls = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,6 +47,11 @@
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsmiAutorun = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmiExit = new System.Windows.Forms.ToolStripMenuItem();
+			this.timer = new System.Windows.Forms.Timer(this.components);
+			this.checkBoxShowDate = new System.Windows.Forms.CheckBox();
+			this.checkBoxShowWeek = new System.Windows.Forms.CheckBox();
+			this.buttonHideControls = new System.Windows.Forms.Button();
+			this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.contextMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -67,51 +67,6 @@
 			this.labelTime.TabIndex = 0;
 			this.labelTime.Text = "CurrentTime";
 			this.labelTime.DoubleClick += new System.EventHandler(this.labelTime_DoubleClick);
-			// 
-			// timer
-			// 
-			this.timer.Enabled = true;
-			this.timer.Tick += new System.EventHandler(this.timer_Tick);
-			// 
-			// checkBoxShowDate
-			// 
-			this.checkBoxShowDate.AutoSize = true;
-			this.checkBoxShowDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.checkBoxShowDate.Location = new System.Drawing.Point(63, 196);
-			this.checkBoxShowDate.Name = "checkBoxShowDate";
-			this.checkBoxShowDate.Size = new System.Drawing.Size(132, 29);
-			this.checkBoxShowDate.TabIndex = 1;
-			this.checkBoxShowDate.Text = "Show date";
-			this.checkBoxShowDate.UseVisualStyleBackColor = true;
-			// 
-			// checkBoxShowWeek
-			// 
-			this.checkBoxShowWeek.AutoSize = true;
-			this.checkBoxShowWeek.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.checkBoxShowWeek.Location = new System.Drawing.Point(63, 231);
-			this.checkBoxShowWeek.Name = "checkBoxShowWeek";
-			this.checkBoxShowWeek.Size = new System.Drawing.Size(189, 29);
-			this.checkBoxShowWeek.TabIndex = 2;
-			this.checkBoxShowWeek.Text = "Show Week Day";
-			this.checkBoxShowWeek.UseVisualStyleBackColor = true;
-			// 
-			// buttonHideControls
-			// 
-			this.buttonHideControls.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.buttonHideControls.Location = new System.Drawing.Point(63, 266);
-			this.buttonHideControls.Name = "buttonHideControls";
-			this.buttonHideControls.Size = new System.Drawing.Size(252, 77);
-			this.buttonHideControls.TabIndex = 3;
-			this.buttonHideControls.Text = "Hide Controls";
-			this.buttonHideControls.UseVisualStyleBackColor = true;
-			this.buttonHideControls.Click += new System.EventHandler(this.buttonHideControls_Click);
-			// 
-			// notifyIcon
-			// 
-			this.notifyIcon.ContextMenuStrip = this.contextMenuStrip;
-			this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
-			this.notifyIcon.Text = "Clock PV_522";
-			this.notifyIcon.Visible = true;
 			// 
 			// contextMenuStrip
 			// 
@@ -131,6 +86,7 @@
             this.tsmiExit});
 			this.contextMenuStrip.Name = "contextMenuStrip";
 			this.contextMenuStrip.Size = new System.Drawing.Size(181, 248);
+			this.contextMenuStrip.MouseUp += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
 			// 
 			// tsmiTopmost
 			// 
@@ -158,6 +114,7 @@
 			this.tsmiShowDate.Name = "tsmiShowDate";
 			this.tsmiShowDate.Size = new System.Drawing.Size(180, 22);
 			this.tsmiShowDate.Text = "Show date";
+			this.tsmiShowDate.Click += new System.EventHandler(this.tsmiShowDate_Click);
 			// 
 			// tsmiShowWeekday
 			// 
@@ -165,6 +122,7 @@
 			this.tsmiShowWeekday.Name = "tsmiShowWeekday";
 			this.tsmiShowWeekday.Size = new System.Drawing.Size(180, 22);
 			this.tsmiShowWeekday.Text = "Show weekday";
+			this.tsmiShowWeekday.Click += new System.EventHandler(this.tsmiShowWeekday_Click);
 			// 
 			// toolStripSeparator2
 			// 
@@ -226,6 +184,53 @@
 			this.tsmiExit.Name = "tsmiExit";
 			this.tsmiExit.Size = new System.Drawing.Size(180, 22);
 			this.tsmiExit.Text = "Exit";
+			this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
+			// 
+			// timer
+			// 
+			this.timer.Enabled = true;
+			//this.timer.Tick += new System.EventHandler(this.timer_Tick);
+			// 
+			// checkBoxShowDate
+			// 
+			this.checkBoxShowDate.AutoSize = true;
+			this.checkBoxShowDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.checkBoxShowDate.Location = new System.Drawing.Point(63, 196);
+			this.checkBoxShowDate.Name = "checkBoxShowDate";
+			this.checkBoxShowDate.Size = new System.Drawing.Size(132, 29);
+			this.checkBoxShowDate.TabIndex = 1;
+			this.checkBoxShowDate.Text = "Show date";
+			this.checkBoxShowDate.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxShowWeek
+			// 
+			this.checkBoxShowWeek.AutoSize = true;
+			this.checkBoxShowWeek.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.checkBoxShowWeek.Location = new System.Drawing.Point(63, 231);
+			this.checkBoxShowWeek.Name = "checkBoxShowWeek";
+			this.checkBoxShowWeek.Size = new System.Drawing.Size(189, 29);
+			this.checkBoxShowWeek.TabIndex = 2;
+			this.checkBoxShowWeek.Text = "Show Week Day";
+			this.checkBoxShowWeek.UseVisualStyleBackColor = true;
+			// 
+			// buttonHideControls
+			// 
+			this.buttonHideControls.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.buttonHideControls.Location = new System.Drawing.Point(63, 266);
+			this.buttonHideControls.Name = "buttonHideControls";
+			this.buttonHideControls.Size = new System.Drawing.Size(252, 77);
+			this.buttonHideControls.TabIndex = 3;
+			this.buttonHideControls.Text = "Hide Controls";
+			this.buttonHideControls.UseVisualStyleBackColor = true;
+			this.buttonHideControls.Click += new System.EventHandler(this.buttonHideControls_Click);
+			// 
+			// notifyIcon
+			// 
+			this.notifyIcon.ContextMenuStrip = this.contextMenuStrip;
+			this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+			this.notifyIcon.Text = "Clock PV_522";
+			this.notifyIcon.Visible = true;
+			this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
 			// 
 			// MainForm
 			// 
