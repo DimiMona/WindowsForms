@@ -182,6 +182,7 @@
 			this.tsmiAutorun.Name = "tsmiAutorun";
 			this.tsmiAutorun.Size = new System.Drawing.Size(152, 22);
 			this.tsmiAutorun.Text = "Autorun";
+			this.tsmiAutorun.CheckedChanged += new System.EventHandler(this.tsmiAutorun_CheckedChanged);
 			// 
 			// tsmiExit
 			// 

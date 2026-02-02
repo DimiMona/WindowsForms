@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -127,5 +128,36 @@ namespace Clock
 				labelTime.Font = defaultFont;
 			}
 		}
+
+		private void tsmiAutorun_CheckedChanged(object sender, EventArgs e)
+		{
+		
+			// Устанавливаем или удаляем из автозагрузки
+			if (tsmiAutorun.Checked)
+			{
+				RegistryKey runKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+				if (runKey != null)
+				{
+					runKey.SetValue("MyClock", Application.ExecutablePath);
+					runKey.Close();
+				}
+			}
+			else
+			{
+				RegistryKey runKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+				if (runKey != null)
+				{
+					runKey.DeleteValue("MyClock", false);
+					runKey.Close();
+				}
+			}
+
+			// Сохраняем настройку			
+			Properties.Settings.Default.Save();
+		}
+
+		
 	}
 }
