@@ -20,6 +20,10 @@ namespace Clock
 		PrivateFontCollection fontCollection = new PrivateFontCollection();
 		Font customFont;
 		Font defaultFont;
+		Point lastPoint;
+
+		private Point dragStartPoint;//запоминает точку, где нажали мышку
+		private bool canDragWindow = false;//флаг (true/false), можно ли сейчас двигать окно
 		public MainForm()
 		{
 			InitializeComponent();
@@ -33,7 +37,14 @@ namespace Clock
 			fontCollection.AddFontFile(@"D:\Учеба по РПО\Source\repos\WindowsForms\Clock\Fonts\prodes-stencil.regular.ttf");
 			customFont = new Font(fontCollection.Families[0], 32);
 			defaultFont = labelTime.Font;
+
+			// Подключаем события мыши к labelTime
+			labelTime.MouseDown += labelTime_MouseDown;
+			labelTime.MouseMove += labelTime_MouseMove;
+			labelTime.MouseUp += labelTime_MouseUp;
 		}
+
+
 		private void timer_Tick(object sender, EventArgs e)
 		{
 			labelTime.Text = DateTime.Now.ToString
@@ -63,10 +74,10 @@ namespace Clock
 																		   //для того чтобы сделать окно 
 		}
 
-		private void buttonHideControls_Click(object sender, EventArgs e) =>
+		private void buttonHideControls_Click(object sender, EventArgs e)
+		{
 			tsmiShowControls.Checked = false;
-
-
+		}
 		private void labelTime_DoubleClick(object sender, EventArgs e) =>
 			tsmiShowControls.Checked = true;
 
@@ -104,7 +115,7 @@ namespace Clock
 		private void tsmiBackgroundColor_Click(object sender, EventArgs e)
 		{
 			DialogResult result = backgroundDialog.ShowDialog();
-			if(result == DialogResult.OK)
+			if (result == DialogResult.OK)
 			{
 				labelTime.BackColor = backgroundDialog.Color;
 			}
@@ -115,7 +126,7 @@ namespace Clock
 			if (foregroundDialog.ShowDialog() == DialogResult.OK)
 				labelTime.ForeColor = foregroundDialog.Color;
 		}
-		
+
 		private void tsmiFont_CheckedChanged_1(object sender, EventArgs e)
 		{
 			if (labelTime.Font.Name != fontCollection.Families[0].Name)
@@ -131,7 +142,7 @@ namespace Clock
 
 		private void tsmiAutorun_CheckedChanged(object sender, EventArgs e)
 		{
-		
+
 			// Устанавливаем или удаляем из автозагрузки
 			if (tsmiAutorun.Checked)
 			{
@@ -157,7 +168,51 @@ namespace Clock
 			// Сохраняем настройку			
 			Properties.Settings.Default.Save();
 		}
+		// 1. Когда нажимаем кнопку мыши на тексте времени
+		private void labelTime_MouseDown(object sender, MouseEventArgs e)
+		{
+			// Проверяем: если нажата ЛЕВАЯ кнопка мыши И контролы скрыты
+			if (e.Button == MouseButtons.Left && !tsmiShowControls.Checked)
+			{
+				// Запоминаем точку клика
+				dragStartPoint = new Point(e.X, e.Y);
+				// Разрешаем перемещение
+				canDragWindow = true;
+				// Меняем курсор на "руку"
+				labelTime.Cursor = Cursors.SizeAll;
+			}
+		}
+
+		// 2. Когда двигаем мышку
+		private void labelTime_MouseMove(object sender, MouseEventArgs e)
+		{
+			// Если можно двигать И кнопка мыши нажата
+			if (canDragWindow && e.Button == MouseButtons.Left)
+			{
+				// Вычисляем новую позицию окна
+				Point newLocation = this.Location;
+				newLocation.X += e.X - dragStartPoint.X;
+				newLocation.Y += e.Y - dragStartPoint.Y;
+
+				// Перемещаем окно
+				this.Location = newLocation;
+			}
+		}
+
+		// 3. Когда отпускаем кнопку мыши
+		private void labelTime_MouseUp(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				// Запрещаем дальнейшее перемещение
+				canDragWindow = false;
+				// Возвращаем обычный курсор
+				labelTime.Cursor = Cursors.Default;
+			}
+		}
 
 		
+		
+
 	}
 }
