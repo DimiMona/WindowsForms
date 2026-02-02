@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,6 +16,9 @@ namespace Clock
 	{
 		ColorDialog backgroundDialog;
 		ColorDialog foregroundDialog;
+		PrivateFontCollection fontCollection = new PrivateFontCollection();
+		Font customFont;
+		Font defaultFont;
 		public MainForm()
 		{
 			InitializeComponent();
@@ -24,6 +29,9 @@ namespace Clock
 			tsmiShowControls.Checked = true;
 			backgroundDialog = new ColorDialog();
 			foregroundDialog = new ColorDialog();
+			fontCollection.AddFontFile(@"D:\Учеба по РПО\Source\repos\WindowsForms\Clock\Fonts\prodes-stencil.regular.ttf");
+			customFont = new Font(fontCollection.Families[0], 32);
+			defaultFont = labelTime.Font;
 		}
 		private void timer_Tick(object sender, EventArgs e)
 		{
@@ -105,6 +113,19 @@ namespace Clock
 		{
 			if (foregroundDialog.ShowDialog() == DialogResult.OK)
 				labelTime.ForeColor = foregroundDialog.Color;
+		}
+		
+		private void tsmiFont_CheckedChanged_1(object sender, EventArgs e)
+		{
+			if (labelTime.Font.Name != fontCollection.Families[0].Name)
+			{
+				labelTime.Font = customFont;
+
+			}
+			else
+			{
+				labelTime.Font = defaultFont;
+			}
 		}
 	}
 }
