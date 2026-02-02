@@ -19,13 +19,8 @@ namespace Clock
 			Rectangle screen = Screen.PrimaryScreen.WorkingArea;
 
 			this.Location = new Point(screen.Width - this.Width, 0);
+			tsmiShowControls.Checked = true;
 		}
-
-		private void MainForm_Load(object sender, EventArgs e)
-		{
-
-		}
-
 		private void timer_Tick(object sender, EventArgs e)
 		{
 			labelTime.Text = DateTime.Now.ToString
@@ -55,19 +50,42 @@ namespace Clock
 																		   //для того чтобы сделать окно 
 		}
 
-		private void buttonHideControls_Click(object sender, EventArgs e)
+		private void buttonHideControls_Click(object sender, EventArgs e) =>
+			tsmiShowControls.Checked = false;
+
+
+		private void labelTime_DoubleClick(object sender, EventArgs e) =>
+			tsmiShowControls.Checked = true;
+
+
+		private void tsmiTopmost_CheckedChanged(object sender, EventArgs e)
 		{
-			SetVisibility(false);
+			//this.TopMost = tsmiTopmost.Checked;
+			this.TopMost = (sender as ToolStripMenuItem).Checked;
 		}
 
-		private void labelTime_DoubleClick(object sender, EventArgs e)
+		private void tsmiShowControls_CheckStateChanged(object sender, EventArgs e)
 		{
-			SetVisibility(true);
+			SetVisibility(tsmiShowControls.Checked);
 		}
 
-		private void tsmiTopmost_Click(object sender, EventArgs e)
-		{
+		private void tsmiExit_Click(object sender, EventArgs e) => this.Close();
 
+		private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			if (!this.TopMost)
+			{
+				this.TopMost = true;
+				this.TopMost = false;
+			}
 		}
+
+		private void checkBoxShowDate_CheckedChanged(object sender, EventArgs e) => tsmiShowDate.Checked = (sender as CheckBox).Checked;
+
+		private void checkBoxShowWeek_CheckedChanged(object sender, EventArgs e) => tsmiShowWeekday.Checked = (sender as CheckBox).Checked;
+
+		private void tsmiShowDate_CheckedChanged(object sender, EventArgs e) => checkBoxShowDate.Checked = (sender as ToolStripMenuItem).Checked;
+
+		private void tsmiShowWeekday_CheckedChanged(object sender, EventArgs e) => checkBoxShowWeek.Checked = (sender as ToolStripMenuItem).Checked;
 	}
 }
