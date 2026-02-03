@@ -45,6 +45,7 @@
 			this.comboBoxFonts.Name = "comboBoxFonts";
 			this.comboBoxFonts.Size = new System.Drawing.Size(344, 21);
 			this.comboBoxFonts.TabIndex = 0;
+			this.comboBoxFonts.SelectedIndexChanged += new System.EventHandler(this.comboBoxFonts_SelectedIndexChanged);
 			// 
 			// numericUpDownFontSize
 			// 
@@ -67,6 +68,7 @@
             0,
             0,
             0});
+			this.numericUpDownFontSize.ValueChanged += new System.EventHandler(this.numericUpDownFontSize_ValueChanged);
 			// 
 			// labelExample
 			// 
@@ -87,6 +89,7 @@
 			this.buttonOk.TabIndex = 3;
 			this.buttonOk.Text = "OK";
 			this.buttonOk.UseVisualStyleBackColor = true;
+			this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
 			// 
 			// buttonCancel
 			// 
