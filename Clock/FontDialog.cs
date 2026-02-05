@@ -14,14 +14,21 @@ namespace Clock
 {
 	public partial class FontDialog : Form
 	{
+		PrivateFontCollection pfc;
 		MainForm parent;
+		Dictionary<string, string> fonts = new Dictionary<string,string>();
 		public Font Font { get; private set; } 
 
 		public FontDialog(MainForm parent)
 		{
 			InitializeComponent();
+			fonts = new Dictionary<string, string>();
+			pfc = null;
 			this.StartPosition = FormStartPosition.Manual;
 			this.parent = parent;
+			LoadFonts();
+
+			
 		}
 		void LoadFonts()
 		{
@@ -33,6 +40,7 @@ namespace Clock
 			//LoadFonts(Directory.GetCurrentDirectory(), "*.ttf");
 			//LoadFonts(Directory.GetCurrentDirectory(), "*.otf");
 			Traverse(Directory.GetCurrentDirectory());
+			comboBoxFonts.Items.AddRange(fonts.Keys.ToArray());
 		}
 		void LoadFonts(string path, string extension)
 		{
@@ -41,9 +49,10 @@ namespace Clock
 			{
 
 				//files[i] = Path.GetFileName(files[i]);
-				files[i] = files[i].Split('\\').Last();
+				//files[i] = files[i].Split('\\').Last();
+				fonts.Add(files[i].Split('\\').Last()/*.Split('.').First()*/, files[i]);
 			}
-			comboBoxFonts.Items.AddRange(files);
+			//comboBoxFonts.Items.AddRange(files);
 		}
 		void Traverse (string path)
 		{
@@ -67,7 +76,8 @@ namespace Clock
 				this.parent.Location.X - this.Width / 4,
 				this.parent.Location.Y + 100
 				);
-			LoadFonts();
+
+			//LoadFonts();
 		}
 
 		private void buttonOk_Click(object sender, EventArgs e)
@@ -78,8 +88,9 @@ namespace Clock
 		}
 		void ApplyFontExample()
 		{
-			PrivateFontCollection pfc = new PrivateFontCollection();
-			pfc.AddFontFile(comboBoxFonts.SelectedItem.ToString());
+			if (pfc != null) pfc.Dispose();
+			pfc = new PrivateFontCollection();
+			pfc.AddFontFile(fonts[comboBoxFonts.SelectedItem.ToString()]);
 			labelExample.Font = new Font(pfc.Families[0], (float)numericUpDownFontSize.Value);
 
 		}
