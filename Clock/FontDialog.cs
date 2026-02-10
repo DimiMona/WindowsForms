@@ -44,11 +44,11 @@ namespace Clock
 		}
 		void LoadFonts()
 		{
-			AllocConsole();
-			Console.WriteLine(Application.ExecutablePath);
+			//AllocConsole();
+			//Console.WriteLine(Application.ExecutablePath);
 			//Directory.SetCurrentDirectory($"{Application.ExecutablePath}");
 			Directory.SetCurrentDirectory($"{Application.ExecutablePath}\\..\\..\\..\\Fonts");
-			Console.WriteLine(Directory.GetCurrentDirectory());
+			//Console.WriteLine(Directory.GetCurrentDirectory());
 			//LoadFonts(Directory.GetCurrentDirectory(), "*.ttf");
 			//LoadFonts(Directory.GetCurrentDirectory(), "*.otf");
 			Traverse(Directory.GetCurrentDirectory());
@@ -106,6 +106,7 @@ namespace Clock
 		}
 		public Font ApplyFontExample( string filename)
 		{
+			if (filename == "") return labelExample.Font;
 			if (pfc != null) pfc.Dispose();
 			pfc = new PrivateFontCollection();
 			pfc.AddFontFile(filename);

@@ -8,11 +8,12 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
-using System.IO;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace Clock
 {
@@ -21,10 +22,13 @@ namespace Clock
 		ColorDialog backgroundDialog;
 		ColorDialog foregroundDialog;
 		FontDialog fontDialog;
+		bool mouseDown = false;
+		Point mouseLocation;
 
 		public MainForm()
 		{
 			InitializeComponent();
+			//AllocConsole();
 			// Получаем размеры рабочей области (без учета панели задач)
 			Rectangle screen = Screen.PrimaryScreen.WorkingArea;
 
@@ -32,14 +36,19 @@ namespace Clock
 			tsmiShowControls.Checked = true;
 			backgroundDialog = new ColorDialog();
 			foregroundDialog = new ColorDialog();
-			//fontDialog = new FontDialog(this);
+			fontDialog = new FontDialog(this, "");
 			LoadSettings();
 		}
+		[DllImport("kernel32.dll")]
+		public static extern bool AllocConsole();
+		[DllImport("kernel32.dll")]
+		public static extern bool FreeConsole();
 		void SaveSettings()
 		{
 			Directory.SetCurrentDirectory($"{Application.ExecutablePath}\\..\\..\\..");
 			string filename = "Settings.ini";
 			StreamWriter writer = new StreamWriter(filename);
+			writer.WriteLine($"{this.Location.X}x{this.Location.Y}");
 			writer.WriteLine(tsmiTopmost.Checked);
 			writer.WriteLine(tsmiShowControls.Checked);
 			writer.WriteLine(tsmiShowDate.Checked);
@@ -58,9 +67,15 @@ namespace Clock
 		{
 			Directory.SetCurrentDirectory($"{Application.ExecutablePath}\\..\\..\\..");
 			StreamReader reader = null;
-			//try
+			try
 			{
 				reader = new StreamReader("Settings.ini");
+				string location = reader.ReadLine();
+				this.Location = new Point
+					(
+					Convert.ToInt16(location.Split('x').First()),
+					Convert.ToInt16(location.Split('x').Last())
+					);
 				tsmiTopmost.Checked = bool.Parse(reader.ReadLine());
 				tsmiShowControls.Checked = bool.Parse(reader.ReadLine());
 				tsmiShowDate.Checked = bool.Parse(reader.ReadLine());
@@ -68,7 +83,7 @@ namespace Clock
 				tsmiAutorun.Checked = bool.Parse(reader.ReadLine());
 				labelTime.BackColor = backgroundDialog.Color = Color.FromArgb(Convert.ToInt32(reader.ReadLine()));
 				labelTime.ForeColor = foregroundDialog.Color = Color.FromArgb(Convert.ToInt32(reader.ReadLine()));
-				//fontDialog = new FontDialog(this);
+				fontDialog = new FontDialog(this, "");
 				//fontDialog.FontFile = reader.ReadLine();
 				string fontSize = reader.ReadLine();
 				fontDialog = new FontDialog(this, reader.ReadLine());
@@ -76,11 +91,11 @@ namespace Clock
 				labelTime.Font = fontDialog.ApplyFontExample(fontDialog.FontFile);
 				reader.Close();
 			}
-			//catch (Exception ex)
-			//{
-			//	MessageBox.Show(this, ex.Message);
+			catch (Exception ex)
+			{
+				MessageBox.Show(this, ex.Message);
 
-			//}
+			}
 			if (reader != null) reader.Close();
 		}
 		private void timer_Tick(object sender, EventArgs e)
@@ -186,6 +201,38 @@ namespace Clock
 		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			SaveSettings();
+		}
+
+		private void labelTime_MouseMove(object sender, MouseEventArgs e)
+		{
+			//if (mouseDown) this.Location = e.Location;
+			//Console.WriteLine($"MouseMove: Window:{this.Location.X}{this.Location.Y};Mouse{e.X}x{e.Y};MouseLocation:{e.Location}");
+			Console.WriteLine($"Window: Location:{this.Location};\tCursor position:{Cursor.Position}");
+			if (mouseDown) this.Location = new Point
+					(
+						Cursor.Position.X - mouseLocation.X,
+						Cursor.Position.Y - mouseLocation.Y
+					);
+			Console.WriteLine(new Point
+				(
+						Cursor.Position.X - e.Location.X,
+						Cursor.Position.Y - e.Location.Y 
+				));
+			Console.WriteLine("\n============================\n");
+		}
+
+		private void labelTime_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				mouseDown = true;
+				mouseLocation = new Point(e.Location.X, e.Location.Y);
+			}
+		}
+
+		private void labelTime_MouseUp(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left) mouseDown = false;
 		}
 	}
 }
