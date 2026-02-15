@@ -210,13 +210,13 @@ namespace Clock
 			Console.WriteLine($"Window: Location:{this.Location};\tCursor position:{Cursor.Position}");
 			if (mouseDown) this.Location = new Point
 					(
-						Cursor.Position.X - mouseLocation.X,
-						Cursor.Position.Y - mouseLocation.Y
+						Cursor.Position.X - labelTime.Location.X - mouseLocation.X,
+						Cursor.Position.Y - labelTime.Location.Y - mouseLocation.Y
 					);
 			Console.WriteLine(new Point
 				(
 						Cursor.Position.X - e.Location.X,
-						Cursor.Position.Y - e.Location.Y 
+						Cursor.Position.Y - e.Location.Y
 				));
 			Console.WriteLine("\n============================\n");
 		}
